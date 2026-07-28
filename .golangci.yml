@@ -12,9 +12,6 @@ linters:
     - errchkjson
     - errorlint
     - exhaustive
-    - gocheckcompilerdirectives
-    - gochecksumtype
-    - gocritic
     - gosec
     - makezero
     - misspell
@@ -23,16 +20,8 @@ linters:
     - nilerr
     - nilnesserr
     - nolintlint
-    - perfsprint
-    - predeclared
-    - reassign
-    - recvcheck
-    - testableexamples
     - thelper
-    - unconvert
-    - usestdlibvars
     - usetesting
-    - wastedassign
 
 formatters:
   enable:

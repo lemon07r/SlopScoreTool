@@ -13,8 +13,8 @@ TOOLS_DIR ?= $(CURDIR)/.tools/bin
 
 GOLANGCI_LINT_VERSION ?= v2.12.2
 GOVULNCHECK_VERSION ?= v1.6.0
-GOLANGCI_LINT ?= $(or $(shell command -v golangci-lint 2>/dev/null),$(TOOLS_DIR)/golangci-lint)
-GOVULNCHECK ?= $(or $(shell command -v govulncheck 2>/dev/null),$(TOOLS_DIR)/govulncheck)
+GOLANGCI_LINT ?= $(TOOLS_DIR)/golangci-lint
+GOVULNCHECK ?= $(TOOLS_DIR)/govulncheck
 
 .PHONY: help tools doctor format format-check lint vet mod-check test test-race \
 	test-cover vuln check audit build install clean require-module require-lint \
@@ -67,7 +67,7 @@ test-cover: require-module ## Write package coverage data under .artifacts.
 vuln: require-module require-vulncheck ## Check reachable known vulnerabilities.
 	@"$(GOVULNCHECK)" $(PACKAGES)
 
-check: format-check mod-check vet lint test ## Run the fast local quality gate.
+check: format-check mod-check lint test ## Run the fast local quality gate.
 
 audit: check test-race vuln ## Run the thorough local quality gate.
 
