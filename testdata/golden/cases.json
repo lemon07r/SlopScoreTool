@@ -1,0 +1,117 @@
+{
+  "../cases/edge-contrast.txt": {
+    "name": "../cases/edge-contrast.txt",
+    "chars": 322,
+    "tokens": 61,
+    "word_hits": [],
+    "trigram_hits": [],
+    "word_score_per_1k": 0,
+    "trigram_score_per_1k": 0,
+    "contrast_hits": 4,
+    "contrast_rate_per_1k": 12.422360248447205,
+    "contrast_matches": [
+      {
+        "pattern_name": "S1_RE_NOT_BUT",
+        "sentence": "It wasn't just the cold, but the silence that followed it.",
+        "match_text": "wasn't just the cold, but",
+        "sentence_count": 1
+      },
+      {
+        "pattern_name": "S1_RE_SIMPLE_BE_NOT_IT_BE",
+        "sentence": "The garden was not only beautiful but also useful.\nIt is not that simple.",
+        "match_text": "The garden was not only beautiful but also useful.\nIt is",
+        "sentence_count": 2
+      },
+      {
+        "pattern_name": "S1_RE_PRON_BE_NOT_SEP_BE",
+        "sentence": "This wasn't a failure. It was a lesson.",
+        "match_text": "This wasn't a failure. It was",
+        "sentence_count": 2
+      },
+      {
+        "pattern_name": "S1_RE_NO_LONGER",
+        "sentence": "The machine no longer worked. It was quieter now.",
+        "match_text": "The machine no longer worked. It was",
+        "sentence_count": 2
+      }
+    ],
+    "normalized": {
+      "words": 0,
+      "trigrams": 0.02153132068130104,
+      "contrast": 1
+    },
+    "score": 25.322969810219515
+  },
+  "../cases/edge-unicode.txt": {
+    "name": "../cases/edge-unicode.txt",
+    "chars": 168,
+    "tokens": 29,
+    "word_hits": [],
+    "trigram_hits": [],
+    "word_score_per_1k": 0,
+    "trigram_score_per_1k": 0,
+    "contrast_hits": 0,
+    "contrast_rate_per_1k": 0,
+    "contrast_matches": [],
+    "normalized": {
+      "words": 0,
+      "trigrams": 0.02153132068130104,
+      "contrast": 0.035141663339551925
+    },
+    "score": 1.2015113937083137
+  },
+  "../cases/edge-short.txt": {
+    "name": "../cases/edge-short.txt",
+    "chars": 24,
+    "tokens": 6,
+    "word_hits": [],
+    "trigram_hits": [],
+    "word_score_per_1k": 0,
+    "trigram_score_per_1k": 0,
+    "contrast_hits": 0,
+    "contrast_rate_per_1k": 0,
+    "contrast_matches": [],
+    "normalized": {
+      "words": 0,
+      "trigrams": 0.02153132068130104,
+      "contrast": 0.035141663339551925
+    },
+    "score": 1.2015113937083137
+  },
+  "../cases/edge-punct.txt": {
+    "name": "../cases/edge-punct.txt",
+    "chars": 17,
+    "tokens": 0,
+    "word_hits": [],
+    "trigram_hits": [],
+    "word_score_per_1k": 0,
+    "trigram_score_per_1k": 0,
+    "contrast_hits": 0,
+    "contrast_rate_per_1k": 0,
+    "contrast_matches": [],
+    "normalized": {
+      "words": 0,
+      "trigrams": 0.02153132068130104,
+      "contrast": 0.035141663339551925
+    },
+    "score": 1.2015113937083137
+  },
+  "../cases/edge-empty.txt": {
+    "name": "../cases/edge-empty.txt",
+    "chars": 1,
+    "tokens": 0,
+    "word_hits": [],
+    "trigram_hits": [],
+    "word_score_per_1k": 0,
+    "trigram_score_per_1k": 0,
+    "contrast_hits": 0,
+    "contrast_rate_per_1k": 0,
+    "contrast_matches": [],
+    "normalized": {
+      "words": 0,
+      "trigrams": 0.02153132068130104,
+      "contrast": 0.035141663339551925
+    },
+    "score": 1.2015113937083137
+  }
+}

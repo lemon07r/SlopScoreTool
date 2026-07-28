@@ -22,6 +22,21 @@ linters:
     - nolintlint
     - thelper
     - usetesting
+  exclusions:
+    rules:
+      # Reading user-specified input files is the CLI's core function; the
+      # remaining reads are repo-local testdata with fixed relative roots.
+      - linters: [gosec]
+        text: "G304"
+      # Presentation layer writes to stdout/stderr; a dead writer (broken
+      # pipe) is not actionable and must not change exit behavior.
+      - linters: [errcheck]
+        text: "Error return value of `fmt\\.Fprint"
+      # datagen writes compile-time-constant file names under a
+      # maintainer-supplied directory; there is no untrusted path input.
+      - linters: [gosec]
+        text: "G703"
+        path: tools/datagen/
 
 formatters:
   enable:

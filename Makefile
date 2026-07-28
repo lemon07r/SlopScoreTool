@@ -17,8 +17,8 @@ GOLANGCI_LINT ?= $(TOOLS_DIR)/golangci-lint
 GOVULNCHECK ?= $(TOOLS_DIR)/govulncheck
 
 .PHONY: help tools doctor format format-check lint vet mod-check test test-race \
-	test-cover vuln check audit build install clean require-module require-lint \
-	require-vulncheck
+	test-cover vuln check audit build install clean data oracle eval test-fuzz \
+	stage2-delta require-module require-lint require-vulncheck
 
 help: ## Show the useful targets.
 	@awk 'BEGIN {FS = ":.*## "; printf "Usage: make <target>\n\n"} \
@@ -70,6 +70,27 @@ vuln: require-module require-vulncheck ## Check reachable known vulnerabilities.
 check: format-check mod-check lint test ## Run the fast local quality gate.
 
 audit: check test-race vuln ## Run the thorough local quality gate.
+
+test-fuzz: require-module ## Fuzz the analyzer and tokenizer briefly.
+	@"$(GO)" test -run xxx -fuzz FuzzAnalyzeInvariants -fuzztime 30s ./slop/
+	@"$(GO)" test -run xxx -fuzz FuzzTokenizerSpans -fuzztime 30s ./slop/
+
+data: require-module ## Regenerate embedded lists/calibration from the pinned upstream commit.
+	@"$(GO)" run ./tools/datagen
+
+oracle: require-module ## Regenerate golden expectations with the vendored Node oracle.
+	@node testdata/upstream/runner.mjs
+
+stage2-delta: require-module ## Measure the POS-tagged stage-2 score delta on the behavior corpus.
+	@test -d "$(CURDIR)/testdata/upstream/node_modules/wink-pos-tagger" || { \
+		printf '%s\n' "wink-pos-tagger is missing; run npm ci in testdata/upstream."; \
+		exit 2; \
+	}
+	@cd testdata/upstream && node --import ./register-loader.mjs runner.mjs --stage2 \
+		../corpus/*.txt ../fixtures/*.txt
+
+eval: require-module ## Run the behavior-corpus evaluation (diagnostic firing rates).
+	@"$(GO)" run ./tools/eval
 
 build: require-module ## Build the command into bin/.
 	@mkdir -p "$(BIN_DIR)"

@@ -1,0 +1,10 @@
+{
+  "name": "slop-score-oracle",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Dev-only differential oracle for the pinned upstream EQ-Bench slop-score implementation. Not shipped.",
+  "type": "module",
+  "optionalDependencies": {
+    "wink-pos-tagger": "2.2.2"
+  }
+}

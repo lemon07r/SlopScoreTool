@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "source": {
+    "repo": "https://github.com/sam-paech/slop-score",
+    "commit": "289264ab2a0df1358ef81ced3c259610ea709514",
+    "license": "MIT"
+  },
+  "files": {
+    "slop_list.json": {
+      "sha256": "fd3bc1e6019ca635b9ea143817eff97d86e03ac089ed746ba3766517e89c368c",
+      "bytes": 24167,
+      "entries": 1648
+    },
+    "slop_list_bigrams.json": {
+      "sha256": "738dcf0bca80187da4aef41e3d5daf3b1b4afef944615fe2b0959d16ea1f4e83",
+      "bytes": 3488,
+      "entries": 200
+    },
+    "slop_list_trigrams.json": {
+      "sha256": "1532f37edddc4b1997ffc714bc9b128e425ca46f04c8b5fe6782a2102ea4d73a",
+      "bytes": 11381,
+      "entries": 430
+    }
+  },
+  "leaderboard": {
+    "sha256": "16925b79d955a1cacef4d2ac91b696e73f976a4a3ceb45122544a9cf661b04de",
+    "bytes": 1410588,
+    "results": 23,
+    "includes_human_baseline": true
+  },
+  "derived": {
+    "range_buffer": 0.1,
+    "ranges_from": "leaderboard_results.json"
+  }
+}

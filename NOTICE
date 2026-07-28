@@ -1,0 +1,30 @@
+Third-party attributions
+
+Upstream method, lists, and calibration (MIT)
+---------------------------------------------
+The composite scoring method, the slop word/bigram/trigram lists, the
+contrast-pattern logic, and the calibration ranges are derived from the
+EQ-Bench slop-score project:
+
+    https://github.com/sam-paech/slop-score
+    Commit 289264ab2a0df1358ef81ced3c259610ea709514
+    Copyright (c) 2025 Sam Paech, MIT License
+
+The canonical embedded data under slop/data/ is generated from that pinned
+revision (see tools/datagen and slop/data/manifest.json). The full upstream
+license text is preserved at testdata/upstream/LICENSE.upstream.
+
+Vendored development oracle (MIT / Apache-2.0)
+----------------------------------------------
+testdata/upstream/js/ contains the pinned upstream JavaScript, used only as
+a development-time differential oracle (never shipped in the Go binary).
+All files are MIT except js/wordfreq.js, which is Apache-2.0 and is vendored
+only because metrics.js imports it; it is never executed by the oracle or
+the analyzer. No wordfreq data files are vendored.
+
+Dev-only stage-2 dependency (MIT)
+---------------------------------
+Running the optional stage-2 delta measurement installs wink-pos-tagger
+2.2.2 (MIT, https://github.com/winkjs/wink-pos-tagger) into
+testdata/upstream/node_modules/ via `npm ci`. It is a development
+dependency only and is not part of the analyzer.

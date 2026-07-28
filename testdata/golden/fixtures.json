@@ -1,0 +1,274 @@
+{
+  "../fixtures/sample1.txt": {
+    "name": "../fixtures/sample1.txt",
+    "chars": 3741,
+    "tokens": 633,
+    "word_hits": [
+      [
+        "gaze",
+        1
+      ],
+      [
+        "guttered",
+        1
+      ],
+      [
+        "scent",
+        1
+      ],
+      [
+        "cradling",
+        1
+      ],
+      [
+        "cradled",
+        1
+      ]
+    ],
+    "trigram_hits": [],
+    "word_score_per_1k": 7.898894154818325,
+    "trigram_score_per_1k": 0,
+    "contrast_hits": 1,
+    "contrast_rate_per_1k": 0.2673082063619353,
+    "contrast_matches": [
+      {
+        "pattern_name": "S1_RE_NOT_BUT",
+        "sentence": "he last leaf of autumn vanished before Aranion's eyes-not fallen, but unmade, its outline a heartbeat of gold after-image against the dawn.",
+        "match_text": "not fallen, but",
+        "sentence_count": 1
+      }
+    ],
+    "normalized": {
+      "words": 0.13820455365408774,
+      "trigrams": 0.02153132068130104,
+      "contrast": 0.32553512106838645
+    },
+    "score": 16.75362105617444
+  },
+  "../fixtures/sample2.txt": {
+    "name": "../fixtures/sample2.txt",
+    "chars": 3352,
+    "tokens": 574,
+    "word_hits": [
+      [
+        "sigils",
+        1
+      ],
+      [
+        "seraphine",
+        1
+      ],
+      [
+        "whispered",
+        1
+      ],
+      [
+        "faltered",
+        1
+      ],
+      [
+        "hovered",
+        1
+      ]
+    ],
+    "trigram_hits": [],
+    "word_score_per_1k": 8.710801393728223,
+    "trigram_score_per_1k": 0,
+    "contrast_hits": 0,
+    "contrast_rate_per_1k": 0,
+    "contrast_matches": [],
+    "normalized": {
+      "words": 0.15762664023790807,
+      "trigrams": 0.02153132068130104,
+      "contrast": 0.035141663339551925
+    },
+    "score": 10.659109807982798
+  },
+  "../fixtures/sample3.txt": {
+    "name": "../fixtures/sample3.txt",
+    "chars": 4749,
+    "tokens": 830,
+    "word_hits": [
+      [
+        "elara",
+        15
+      ],
+      [
+        "kael",
+        4
+      ],
+      [
+        "unyielding",
+        2
+      ],
+      [
+        "shadows",
+        1
+      ],
+      [
+        "seraphina",
+        1
+      ],
+      [
+        "whispers",
+        1
+      ],
+      [
+        "unease",
+        1
+      ],
+      [
+        "whispered",
+        1
+      ],
+      [
+        "pounding",
+        1
+      ],
+      [
+        "deafening",
+        1
+      ],
+      [
+        "raged",
+        1
+      ],
+      [
+        "surged",
+        1
+      ]
+    ],
+    "trigram_hits": [],
+    "word_score_per_1k": 36.144578313253014,
+    "trigram_score_per_1k": 0,
+    "contrast_hits": 1,
+    "contrast_rate_per_1k": 0.2105706464518846,
+    "contrast_matches": [
+      {
+        "pattern_name": "S1_RE_NOT_BUT",
+        "sentence": "But Elara knew that the real victory was not in defeating the Grand Marshal, but in uncovering the truth about her mother and ending the cycle of injustice.",
+        "match_text": "was not in defeating the Grand Marshal, but",
+        "sentence_count": 1
+      }
+    ],
+    "normalized": {
+      "words": 0.8138853421157368,
+      "trigrams": 0.02153132068130104,
+      "contrast": 0.2638975962440729
+    },
+    "score": 55.753530243265544
+  },
+  "../fixtures/sample4.txt": {
+    "name": "../fixtures/sample4.txt",
+    "chars": 3285,
+    "tokens": 542,
+    "word_hits": [
+      [
+        "rasp",
+        1
+      ],
+      [
+        "calloused",
+        1
+      ],
+      [
+        "crimson",
+        1
+      ],
+      [
+        "sipped",
+        1
+      ],
+      [
+        "fluttered",
+        1
+      ],
+      [
+        "faltered",
+        1
+      ],
+      [
+        "whispering",
+        1
+      ],
+      [
+        "spiraled",
+        1
+      ],
+      [
+        "whispers",
+        1
+      ],
+      [
+        "slicked",
+        1
+      ],
+      [
+        "stumbled",
+        1
+      ],
+      [
+        "shadows",
+        1
+      ],
+      [
+        "whispered",
+        1
+      ],
+      [
+        "stared",
+        1
+      ]
+    ],
+    "trigram_hits": [],
+    "word_score_per_1k": 25.830258302583026,
+    "trigram_score_per_1k": 0,
+    "contrast_hits": 0,
+    "contrast_rate_per_1k": 0,
+    "contrast_matches": [],
+    "normalized": {
+      "words": 0.5671507316823714,
+      "trigrams": 0.02153132068130104,
+      "contrast": 0.035141663339551925
+    },
+    "score": 35.23055529465059
+  },
+  "../fixtures/sample5.txt": {
+    "name": "../fixtures/sample5.txt",
+    "chars": 1505,
+    "tokens": 256,
+    "word_hits": [
+      [
+        "thalion",
+        4
+      ],
+      [
+        "seraphine",
+        4
+      ],
+      [
+        "whispers",
+        1
+      ]
+    ],
+    "trigram_hits": [],
+    "word_score_per_1k": 35.15625,
+    "trigram_score_per_1k": 0,
+    "contrast_hits": 1,
+    "contrast_rate_per_1k": 0.6644518272425249,
+    "contrast_matches": [
+      {
+        "pattern_name": "S1_RE_NOT_BUT",
+        "sentence": "Their chains were not merely of iron, but of despair, as their only hope of escape lay in an impossible task: to teach the colony's moths to carry their forbidden messages by feeding them drops of blood-soaked lies.",
+        "match_text": "were not merely of iron, but",
+        "sentence_count": 1
+      }
+    ],
+    "normalized": {
+      "words": 0.7902429884658128,
+      "trigrams": 0.02153132068130104,
+      "contrast": 0.7569768296940835
+    },
+    "score": 66.66196986052036
+  }
+}

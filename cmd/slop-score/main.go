@@ -1,0 +1,56 @@
+// Command slop-score analyzes prose for AI-associated writing tendencies
+// and prints structured evidence as text or JSON. Findings are a successful
+// analysis: nonzero exits are reserved for usage and operational failures.
+package main
+
+import (
+	"errors"
+	"fmt"
+	"io"
+	"os"
+	"slop-score/slop"
+)
+
+func main() {
+	os.Exit(run(os.Args[1:], os.Stdin, os.Stdout, os.Stderr))
+}
+
+const (
+	exitOK    = 0
+	exitError = 1
+	exitUsage = 2
+)
+
+// usageError distinguishes invalid invocation from operational failure.
+type usageError struct{ msg string }
+
+func (e *usageError) Error() string { return e.msg }
+
+func run(argv []string, stdin io.Reader, stdout, stderr io.Writer) int {
+	opts, err := parseFlags(argv)
+	if err != nil {
+		fmt.Fprintln(stderr, "slop-score:", err)
+		fmt.Fprintln(stderr, "try 'slop-score --help'")
+		return exitUsage
+	}
+	if opts.help {
+		fmt.Fprint(stdout, usageText)
+		return exitOK
+	}
+	if opts.version {
+		fmt.Fprintf(stdout, "%s %s (schema v%d, %s)\n",
+			slop.AnalyzerName, slop.Version, slop.SchemaVersion, slop.CompatibilityStage1Fallback)
+		return exitOK
+	}
+	if err := execute(opts, stdin, stdout); err != nil {
+		var uErr *usageError
+		if errors.As(err, &uErr) {
+			fmt.Fprintln(stderr, "slop-score:", uErr)
+			fmt.Fprintln(stderr, "try 'slop-score --help'")
+			return exitUsage
+		}
+		fmt.Fprintln(stderr, "slop-score:", err)
+		return exitError
+	}
+	return exitOK
+}

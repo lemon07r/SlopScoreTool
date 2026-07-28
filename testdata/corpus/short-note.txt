@@ -1,0 +1,1 @@
+The compressor is short-cycling again. It kicks on for about ten seconds, dies, waits a minute, and repeats. Last time this happened it was the capacitor. I'd check that first before assuming the worst about the compressor itself.

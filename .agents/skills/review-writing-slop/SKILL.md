@@ -19,8 +19,10 @@ Use the analyzer as editorial evidence, not as an authority or optimization targ
 
    With no files, pass the draft on stdin. In this source repository, build with `make build` if the binary is absent. If the installed version exposes a different interface, inspect `slop-score --help` rather than guessing.
 
-4. Read sample-size, calibration, truncation, and method warnings before interpreting aggregates.
-5. Inspect the strongest repeated findings in their surrounding prose. Treat isolated low-confidence matches lightly.
+4. Read sample-size, calibration, truncation, and method warnings before interpreting aggregates. When output reports truncated findings, rerun with `--full` before concluding a pattern is absent.
+5. Inspect the strongest repeated findings in their surrounding prose. Treat isolated low-confidence matches lightly. Use `--exclude-term` only for vocabulary that is necessary to the subject (names, domain terms), never to make findings disappear.
+
+For a before/after question, prefer `slop-score --compare BEFORE AFTER` over two separate runs; it reports score, component, and finding deltas without declaring a winner.
 
 ## Judge
 
@@ -33,6 +35,12 @@ Use the analyzer as editorial evidence, not as an authority or optimization targ
 
 Revise only findings that independently improve clarity, specificity, economy, rhythm, or voice. Prefer fixing the underlying sentence or paragraph over mechanically swapping a flagged word. Preserve useful texture and unevenness.
 
-For a meaningful revision, optionally analyze once more and compare the changed findings in context. Stop when the prose is better. Do not chase a target score, zero findings, or endless passes.
+For a meaningful revision, optionally compare drafts directly:
+
+```sh
+slop-score --compare BEFORE.txt AFTER.txt
+```
+
+Read the changed findings in context rather than the score delta. Stop when the prose is better. Do not chase a target score, zero findings, or endless passes.
 
 Return the improved text when revision was requested. Summarize only the editorial choices that help the user; mention important findings deliberately retained when that explains the result.

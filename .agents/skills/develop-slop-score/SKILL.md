@@ -12,8 +12,8 @@ Start from `IMPLEMENTATION_PROMPT.md`, then inspect the current code, tests, exe
 - Keep analysis independent of CLI parsing and presentation.
 - Prefer direct code and the standard library. Add a dependency only when it removes meaningful complexity or supplies hard-to-reproduce semantics.
 - Preserve one analyzer path and one result model. Remove superseded experiments instead of wrapping them.
-- Keep compatibility scoring distinguishable from improved diagnostics. Name deliberate deviations and support them with evidence.
-- Keep rules and calibration data versioned, attributable, inspectable, and reproducible.
+- Keep compatibility scoring distinguishable from improved diagnostics. The compatibility mode is named `eqbench-stage1-fallback`; name deliberate deviations and support them with evidence in `docs/methodology.md`.
+- Keep rules and calibration data versioned, attributable, inspectable, and reproducible. Embedded lists and calibration come from `make data` (pinned upstream commit); the manifest records provenance and hashes.
 
 ## Protect the text contract
 
@@ -34,7 +34,8 @@ Start from `IMPLEMENTATION_PROMPT.md`, then inspect the current code, tests, exe
 ## Verify behavior
 
 - Use focused examples and counterexamples for every heuristic; test intentional rhetoric and necessary domain repetition as well as obvious positives.
-- Use differential tests only for compatibility claims against a pinned upstream revision.
+- Use differential tests only for compatibility claims against a pinned upstream revision. The vendored Node oracle lives in `testdata/upstream/`; its expectations are committed as `testdata/golden/*.json` and refreshed with `make oracle` (Node only needed for refresh, not for tests).
+- Measure diagnostic firing rates with `make eval` (behavior corpus in `testdata/corpus/`) before keeping, cutting, or rethresholding a diagnostic.
 - Fuzz tokenizer, normalization, span, and serialization boundaries. Useful invariants include no panic, valid spans, deterministic results, and exact source recovery.
 - Test CLI streams, exits, limits, stdin and multi-file behavior, schema versioning, and stable JSON.
 - Evaluate editorial usefulness on varied prose. A detector that merely lowers its own score or flattens voice has failed.
