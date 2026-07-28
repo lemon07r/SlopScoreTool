@@ -1,4 +1,4 @@
-module slop-score
+module github.com/lemon07r/SlopScoreTool
 
 go 1.26.5
 

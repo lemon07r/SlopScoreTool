@@ -5,15 +5,16 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"slop-score/slop"
 	"strings"
+
+	"github.com/lemon07r/SlopScoreTool/slop"
 )
 
-const usageText = `slop-score - analyze prose for AI-associated writing tendencies
+const usageText = `sst - analyze prose for AI-associated writing tendencies
 
 Usage:
-  slop-score [flags] [FILE ...]      analyze files, or stdin when none are given
-  slop-score --compare BEFORE AFTER  compare two drafts
+  sst [flags] [FILE ...]      analyze files, or stdin when none are given
+  sst --compare BEFORE AFTER  compare two drafts
 
 Flags:
   --format text|json   output format (default "text")
@@ -52,7 +53,7 @@ func (s *stringList) Set(v string) error {
 
 func parseFlags(argv []string) (cliOptions, error) {
 	opts := cliOptions{format: "text", maxFindings: 10}
-	fs := flag.NewFlagSet("slop-score", flag.ContinueOnError)
+	fs := flag.NewFlagSet("sst", flag.ContinueOnError)
 	fs.SetOutput(io.Discard)
 	fs.StringVar(&opts.format, "format", "text", "output format: text or json")
 	fs.IntVar(&opts.maxFindings, "max-findings", 10, "findings per group")

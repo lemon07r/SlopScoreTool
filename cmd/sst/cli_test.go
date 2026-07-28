@@ -5,9 +5,10 @@ import (
 	"encoding/json"
 	"os"
 	"path/filepath"
-	"slop-score/slop"
 	"strings"
 	"testing"
+
+	"github.com/lemon07r/SlopScoreTool/slop"
 )
 
 func runCLI(t *testing.T, argv []string, stdin string) (code int, stdout, stderr string) {

@@ -1,0 +1,97 @@
+name: release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - name: Tag must match slop.Version
+        run: |
+          v=$(sed -n 's/.*Version *= *"\([^"]*\)".*/\1/p' slop/result.go | head -n1)
+          if [ "${GITHUB_REF_NAME}" != "v${v}" ]; then
+            echo "tag ${GITHUB_REF_NAME} does not match slop.Version ${v}"
+            exit 1
+          fi
+      - run: go vet ./...
+      - run: go test -shuffle=on ./...
+
+  build:
+    needs: verify
+    strategy:
+      matrix:
+        include:
+          - goos: linux
+            goarch: amd64
+          - goos: linux
+            goarch: arm64
+          - goos: darwin
+            goarch: amd64
+          - goos: darwin
+            goarch: arm64
+          - goos: windows
+            goarch: amd64
+          - goos: windows
+            goarch: arm64
+    runs-on: ubuntu-latest
+    env:
+      GOOS: ${{ matrix.goos }}
+      GOARCH: ${{ matrix.goarch }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - name: Build and package
+        shell: bash
+        run: |
+          set -euo pipefail
+          ext=""
+          if [ "$GOOS" = windows ]; then ext=".exe"; fi
+          mkdir -p stage dist
+          CGO_ENABLED=0 go build -trimpath -ldflags="-s -w" -o "stage/sst${ext}" ./cmd/sst
+          cp "stage/sst${ext}" "stage/slop-score${ext}"
+          cp LICENSE NOTICE README.md stage/
+          base="sst_${GITHUB_REF_NAME#v}_${GOOS}_${GOARCH}"
+          if [ "$GOOS" = windows ]; then
+            (cd stage && zip -q "../dist/${base}.zip" ./*)
+          else
+            tar -czf "dist/${base}.tar.gz" -C stage .
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist-${{ matrix.goos }}-${{ matrix.goarch }}
+          path: dist/*
+          if-no-files-found: error
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: dist-*
+          path: dist
+          merge-multiple: true
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd dist
+          sha256sum ./*.tar.gz ./*.zip > checksums.txt
+          gh release create "$GITHUB_REF_NAME" \
+            --title "$GITHUB_REF_NAME" \
+            --generate-notes \
+            ./*

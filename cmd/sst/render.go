@@ -4,8 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"slop-score/slop"
 	"strings"
+
+	"github.com/lemon07r/SlopScoreTool/slop"
 )
 
 func renderJSON(w io.Writer, v any) error {

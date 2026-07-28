@@ -1,4 +1,4 @@
-# slop-score
+# SlopScoreTool (SST)
 
 Analyze prose for repetitive, canned, or statistically overused AI-associated
 writing tendencies. The tool returns structured editorial evidence, rates,
@@ -16,16 +16,17 @@ score orients review; the findings are the product.
 
 ## Install
 
-Requires a current stable Go toolchain.
+Download an archive from the
+[releases page](https://github.com/lemon07r/SlopScoreTool/releases) for your
+platform; each archive contains the `sst` binary and a `slop-score` alias
+(same program, either name works). With a current stable Go toolchain:
 
 ```sh
-git clone <this repo> && cd Slop-Score-Tool
-make install      # go install ./cmd/slop-score (into your GOBIN)
-# or: make build  # writes bin/slop-score in the repo
+go install github.com/lemon07r/SlopScoreTool/cmd/sst@latest
 ```
 
-No module path is published yet; building from a checkout is the supported
-path.
+Or build from a checkout: `make install` (into your GOBIN), or `make build`
+(writes `bin/sst` in the repo).
 
 ### Use with an agent harness
 
@@ -42,12 +43,12 @@ directly.
 ## Use
 
 ```sh
-slop-score draft.txt                 # analyze files (or stdin when none given)
-cat draft.txt | slop-score           # stdin
-slop-score --format json draft.txt   # compact machine report (stdout stays clean)
-slop-score --compare before.txt after.txt   # revision comparison, no winner declared
-slop-score --full draft.txt          # all findings, no per-group limit
-slop-score --exclude-term kubernetes docs/*.md   # omit a necessary domain term
+sst draft.txt                 # analyze files (or stdin when none given)
+cat draft.txt | sst           # stdin
+sst --format json draft.txt   # compact machine report (stdout stays clean)
+sst --compare before.txt after.txt   # revision comparison, no winner declared
+sst --full draft.txt          # all findings, no per-group limit
+sst --exclude-term kubernetes docs/*.md   # omit a necessary domain term
 ```
 
 Multiple files are analyzed independently, never concatenated, and the JSON

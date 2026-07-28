@@ -3,8 +3,8 @@ SHELL := /usr/bin/bash
 .DEFAULT_GOAL := help
 
 GO ?= go
-BINARY ?= slop-score
-COMMAND ?= ./cmd/slop-score
+BINARY ?= sst
+COMMAND ?= ./cmd/sst
 PACKAGES ?= ./...
 
 BIN_DIR ?= $(CURDIR)/bin

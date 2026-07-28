@@ -3,8 +3,8 @@ package slop
 // Schema and analyzer identity for versioned machine-readable output.
 const (
 	SchemaVersion = 1
-	Version       = "0.1.0"
-	AnalyzerName  = "slop-score"
+	Version       = "1.0.0"
+	AnalyzerName  = "sst"
 
 	// CompatibilityStage1Fallback names the compatibility basis precisely:
 	// the composite score, list hit rates, and contrast detection match the

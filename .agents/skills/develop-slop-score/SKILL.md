@@ -1,11 +1,11 @@
 ---
 name: develop-slop-score
-description: Implement, review, debug, test, benchmark, or modernize this repository's Go writing analyzer and slop-score CLI. Use for scoring and diagnostic logic, Unicode tokenization and source spans, calibration data, CLI behavior, structured output, embedded assets, or analyzer evaluation.
+description: Implement, review, debug, test, benchmark, or modernize this repository's Go writing analyzer and sst CLI. Use for scoring and diagnostic logic, Unicode tokenization and source spans, calibration data, CLI behavior, structured output, embedded assets, or analyzer evaluation.
 ---
 
 # Develop Slop Score
 
-Start from `IMPLEMENTATION_PROMPT.md`, then inspect the current code, tests, executable help, and machine-output schema. Treat the latter four as operational truth when the plan has aged.
+Start from the current code, tests, executable help, and machine-output schema; treat them as operational truth. Durable method, provenance, and compatibility knowledge lives in `docs/methodology.md`.
 
 ## Shape the change
 
@@ -29,7 +29,7 @@ Start from `IMPLEMENTATION_PROMPT.md`, then inspect the current code, tests, exe
 - Let only `main` choose a process exit. Return errors from lower layers.
 - Write requested results—and only those results—to stdout; write diagnostics to stderr.
 - Treat findings as a successful analysis. Reserve nonzero exits for usage or operational failure.
-- Preserve the agent contract: `slop-score --format json --max-findings 20 [FILE...]`, with stdin used when no files are given.
+- Preserve the agent contract: `sst --format json --max-findings 20 [FILE...]`, with stdin used when no files are given.
 
 ## Verify behavior
 

@@ -1,4 +1,4 @@
-// Command slop-score analyzes prose for AI-associated writing tendencies
+// Command sst analyzes prose for AI-associated writing tendencies
 // and prints structured evidence as text or JSON. Findings are a successful
 // analysis: nonzero exits are reserved for usage and operational failures.
 package main
@@ -8,7 +8,8 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"slop-score/slop"
+
+	"github.com/lemon07r/SlopScoreTool/slop"
 )
 
 func main() {
@@ -29,8 +30,8 @@ func (e *usageError) Error() string { return e.msg }
 func run(argv []string, stdin io.Reader, stdout, stderr io.Writer) int {
 	opts, err := parseFlags(argv)
 	if err != nil {
-		fmt.Fprintln(stderr, "slop-score:", err)
-		fmt.Fprintln(stderr, "try 'slop-score --help'")
+		fmt.Fprintln(stderr, "sst:", err)
+		fmt.Fprintln(stderr, "try 'sst --help'")
 		return exitUsage
 	}
 	if opts.help {
@@ -45,11 +46,11 @@ func run(argv []string, stdin io.Reader, stdout, stderr io.Writer) int {
 	if err := execute(opts, stdin, stdout); err != nil {
 		var uErr *usageError
 		if errors.As(err, &uErr) {
-			fmt.Fprintln(stderr, "slop-score:", uErr)
-			fmt.Fprintln(stderr, "try 'slop-score --help'")
+			fmt.Fprintln(stderr, "sst:", uErr)
+			fmt.Fprintln(stderr, "try 'sst --help'")
 			return exitUsage
 		}
-		fmt.Fprintln(stderr, "slop-score:", err)
+		fmt.Fprintln(stderr, "sst:", err)
 		return exitError
 	}
 	return exitOK

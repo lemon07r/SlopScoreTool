@@ -11,9 +11,10 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"slop-score/slop"
 	"sort"
 	"strings"
+
+	"github.com/lemon07r/SlopScoreTool/slop"
 )
 
 var labels = map[string]string{
