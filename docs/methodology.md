@@ -127,7 +127,7 @@ and reports per-label firing rates. Labels are honest provenance notes
 | label           | docs | mean score | notes                                   |
 |-----------------|-----:|-----------:|-----------------------------------------|
 | model-like      |    2 |      77.09 | dense word/trigram/contrast findings    |
-| vellum-fixture  |    5 |      37.01 | legacy regression samples, mixed origin |
+| legacy-fixture  |    5 |      37.01 | legacy regression samples, mixed origin |
 | human-like      |    2 |      12.42 | one essay (23.65) + one review (1.20)   |
 | revision-before |    1 |      85.32 | model-style scene draft                 |
 | revision-after  |    1 |      11.96 | same scene after a hand revision pass   |

@@ -27,13 +27,14 @@ var labels = map[string]string{
 	"short-note":         "short",
 	"pair-before":        "revision-before",
 	"pair-after":         "revision-after",
-	// VellumFilter2 regression fixtures: provenance known, human/AI status
-	// unverified, so they form their own group rather than a labeled claim.
-	"sample1": "vellum-fixture",
-	"sample2": "vellum-fixture",
-	"sample3": "vellum-fixture",
-	"sample4": "vellum-fixture",
-	"sample5": "vellum-fixture",
+	// Regression fixtures inherited from the original Go seed: provenance
+	// known, human/AI status unverified, so they form their own group
+	// rather than a labeled claim.
+	"sample1": "legacy-fixture",
+	"sample2": "legacy-fixture",
+	"sample3": "legacy-fixture",
+	"sample4": "legacy-fixture",
+	"sample5": "legacy-fixture",
 }
 
 type docResult struct {

@@ -15,8 +15,9 @@ Not regression fixtures: scores here are observed, not golden-locked.
 | short-note.txt | short | ~50-word note (tests short-input warnings) |
 | pair-before.txt / pair-after.txt | revision pair | Same scene, model-style draft vs hand revision (compare-mode eval) |
 
-The five VellumFilter2 regression fixtures in `../fixtures/` (sample1-5.txt) are
-reported as their own `vellum-fixture` group: their provenance is known but their
-human/AI labels were not carried over, so the eval makes no claim about them.
+The five regression fixtures in `../fixtures/` (sample1-5.txt) were inherited
+from the original Go seed and are reported as their own `legacy-fixture` group:
+their provenance is known but their human/AI labels were not carried over, so
+the eval makes no claim about them.
 
 Run the evaluation with `make eval` (see `tools/eval/`).

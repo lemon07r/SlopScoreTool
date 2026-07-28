@@ -10,9 +10,9 @@ The sources below are starting evidence, not a product boundary. Inspect them, e
 
 ## Sources and known starting points
 
-- Go seed: `/home/lamim/Development/Vellum/VellumFilter2/internal/filter/slop/`
-- Fixtures and tests: `/home/lamim/Development/Vellum/VellumFilter2/testdata/` and `/home/lamim/Development/Vellum/VellumFilter2/tests/slop_scorer_test.go`
-- Debug command: `/home/lamim/Development/Vellum/VellumFilter2/cmd/debug_scorer/`
+- Go seed: an existing internal Go slop filter package (words, trigrams, stage-one contrast patterns)
+- Fixtures and tests: that project's slop testdata and scorer tests
+- Debug command: that project's debug scorer command
 - Public method: <https://eqbench.com/slop-score.html>
 - Current upstream: <https://github.com/sam-paech/slop-score>
 - Site source supplied by the user: <https://github.com/EQ-bench/EQ-bench-site>
@@ -21,7 +21,7 @@ Pin the upstream revisions actually used and preserve their licenses and attribu
 
 Verify these observations early:
 
-- VellumFilter2 scores words, trigrams, and ten stage-one contrast patterns with leaderboard-derived normalization and 60/25/15 weights.
+- The older Go port scores words, trigrams, and ten stage-one contrast patterns with leaderboard-derived normalization and 60/25/15 weights.
 - Current upstream describes an additional POS-tagged contrast stage and descriptive metrics. Decide what is worth carrying forward from the actual source.
 - The Go seed loads bigrams without using them in its composite, contains unrelated dataset-threshold helpers, embeds a large leaderboard to derive a few ranges, and has a debug display with obsolete weights.
 - The five existing samples are useful regressions, not proof of parity or editorial value.
@@ -98,4 +98,4 @@ Use varied prose: human, model-like, technical, dialogue-heavy, rhetorical, shor
 
 Keep dependencies and public APIs small. Run formatting, static analysis, tests, race detection, vulnerability checks, and focused evaluations before handoff. Benchmark only if realistic use reveals a performance concern.
 
-The result is ready when a fresh checkout builds easily; analysis works offline for stdin and files; reports expose actionable evidence and limitations; compatibility and improvements are honestly named and tested; data provenance is reproducible; the skill exercises judgment; common use is easy to discover; and no duplicate implementation paths, stale docs, or unrelated VellumFilter2 code remain.
+The result is ready when a fresh checkout builds easily; analysis works offline for stdin and files; reports expose actionable evidence and limitations; compatibility and improvements are honestly named and tested; data provenance is reproducible; the skill exercises judgment; common use is easy to discover; and no duplicate implementation paths, stale docs, or unrelated seed-project code remain.

@@ -263,8 +263,8 @@ func TestGoldenCases(t *testing.T) {
 	}
 }
 
-// TestFixtureOrdering locks the regression signal from the original
-// VellumFilter2 fixtures: scores must stay strictly ordered.
+// TestFixtureOrdering locks the regression signal from the original seed
+// fixtures: scores must stay strictly ordered.
 func TestFixtureOrdering(t *testing.T) {
 	a, err := NewAnalyzer()
 	if err != nil {
