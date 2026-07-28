@@ -16,7 +16,6 @@ The sources below are starting evidence, not a product boundary. Inspect them, e
 - Public method: <https://eqbench.com/slop-score.html>
 - Current upstream: <https://github.com/sam-paech/slop-score>
 - Site source supplied by the user: <https://github.com/EQ-bench/EQ-bench-site>
-- Optional Go practice catalogue: <https://github.com/samber/cc-skills-golang>
 
 Pin the upstream revisions actually used and preserve their licenses and attribution.
 
@@ -53,7 +52,7 @@ A strong default is:
 - embedded and versioned analysis data;
 - human-readable output and a compact versioned JSON contract;
 - stdin and file input, with clear multi-document behavior;
-- focused tests, representative evaluation fixtures, and a distributable `.agents/skills/review-writing-slop` skill;
+- focused tests and representative evaluation fixtures;
 - a concise README and, only if needed, one methodology/provenance document.
 
 This is a preference, not a prohibition. A server, UI, MCP adapter, remote API, automatic rewriting, plugin framework, or substantial configuration system probably does not belong in the first version unless exploration reveals a compelling need.
@@ -61,8 +60,6 @@ This is a preference, not a prohibition. A server, UI, MCP adapter, remote API, 
 Start with the latest stable Go release and latest stable compatible dependencies, verified from primary sources. Pin chosen versions and record only meaningful exceptions. Installing useful developer or system tools is in scope.
 
 The supplied Makefile and golangci-lint configuration establish the developer workflow. Refresh their pinned tools and adapt command paths or noisy linters as the code takes shape. Keep `make check` quick and `make audit` thorough.
-
-Mine the optional Go skill catalogue selectively rather than installing it wholesale. The useful ideas for this project include injectable CLI streams and keeping process exits at the program boundary, fuzzing text and span invariants, measuring realistic corpora before optimizing, and using current language and tooling features. Do not inherit framework defaults, rigid layout or test rituals, or production machinery without a need demonstrated by this code.
 
 ## Analysis result
 
@@ -87,20 +84,9 @@ Make calibration and data refreshes reproducible. If a compact generated artifac
 
 Version source lists and rules. An update should produce an inspectable behavioral diff and run the evaluation corpus before replacing the canonical data.
 
-## Agent skill
+## Existing skills
 
-Build the skill with the executable so its commands and interpretation cannot drift. Its metadata should trigger for drafting, revision, prose review, repetitive AI-associated language, or an explicit request to reduce AI slop—not for authorship detection.
-
-Keep `SKILL.md` short. It should direct an agent to:
-
-1. Preserve purpose, voice, audience, genre, and hard constraints.
-2. Analyze a substantive draft rather than writing from a blocklist.
-3. Read sample warnings before aggregates and inspect the strongest repeated findings.
-4. Decide which findings are real weaknesses and which are intentional or necessary.
-5. Revise only when the change improves the prose independently of the metric.
-6. Optionally compare once, then stop when the writing is better rather than chasing zero.
-
-Have the skill request bounded JSON and explain editorial choices in normal writing terms. Keep detailed methodology in project documentation. Validate the skill structure and forward-test it with fresh agents using raw drafts and analyzer output.
+The repository contains the distributable `.agents/skills/review-writing-slop` workflow and the implementation-focused `.agents/skills/develop-slop-score` workflow. Treat their documented command as an executable contract. Keep them synchronized in the same change when that interface deliberately changes, and do not copy analyzer rules or methodology into them.
 
 Installing the binary on `PATH` plus copying or linking the skill should cover skill-aware harnesses. Other harnesses can call the same CLI/JSON contract through a thin adapter.
 

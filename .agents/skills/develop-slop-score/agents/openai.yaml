@@ -1,0 +1,4 @@
+interface:
+  display_name: "Develop Slop Score"
+  short_description: "Build and validate the Go writing analyzer"
+  default_prompt: "Use $develop-slop-score to implement or review this analyzer change."

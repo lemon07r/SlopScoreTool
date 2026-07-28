@@ -1,0 +1,4 @@
+interface:
+  display_name: "Review Writing Slop"
+  short_description: "Use evidence to improve prose without score chasing"
+  default_prompt: "Use $review-writing-slop to review this draft while preserving its voice."

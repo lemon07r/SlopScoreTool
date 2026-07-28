@@ -4,8 +4,8 @@ This is an experimental tool. Optimize for a useful, coherent artifact and fast 
 
 ## Work
 
-- Own the requested outcome. Inspect relevant evidence, make sensible assumptions, and finish the change. Ask only when a missing choice would materially change the product.
-- Prefer the smallest design that explains itself. Direct code and the standard library usually beat speculative abstractions, configuration, compatibility layers, and dependencies.
+- Own the requested outcome. Inspect relevant evidence, make sensible assumptions, and continue until it is complete. Do not invent human-like stamina or deadline limits, or defer clear in-scope work because it is difficult, tedious, broad, or a convenient follow-up. Ask only when a missing choice would materially change the product.
+- Prefer the smallest design that explains itself. Each new file, abstraction, dependency, check, or workflow should address a concrete need here. Direct code and the standard library usually beat speculative machinery or production-grade security, release, process, and portability work without relevant stakes.
 - Use current stable Go, libraries, and development tools. Pin repository dependencies, verify upgrades, and keep an older version only for a concrete compatibility reason.
 - Verify claims against code, tests, evaluations, or primary sources. Keep useful uncertainty visible rather than turning a heuristic into a fact.
 - Test behavior in proportion to its risk. A change is done when the relevant behavior works, focused checks pass, and nearby stale material is gone.
