@@ -3,7 +3,7 @@ package slop
 // Schema and analyzer identity for versioned machine-readable output.
 const (
 	SchemaVersion = 1
-	Version       = "1.0.0"
+	Version       = "1.1.0"
 	AnalyzerName  = "sst"
 
 	// CompatibilityStage1Fallback names the compatibility basis precisely:

@@ -29,7 +29,7 @@ Start from the current code, tests, executable help, and machine-output schema; 
 - Let only `main` choose a process exit. Return errors from lower layers.
 - Write requested results—and only those results—to stdout; write diagnostics to stderr.
 - Treat findings as a successful analysis. Reserve nonzero exits for usage or operational failure.
-- Preserve the agent contract: `sst --format json --max-findings 20 [FILE...]`, with stdin used when no files are given.
+- Preserve the agent contract: `sst --format agent --max-findings 20 [FILE...]` (compact LLM-oriented report), `--format brief` (trimmed JSON), and `--format json` (full versioned schema), with stdin used when no files are given. The review skill is embedded in the binary (`sst skill`); `sst mcp` serves the same analysis over MCP stdio.
 
 ## Verify behavior
 

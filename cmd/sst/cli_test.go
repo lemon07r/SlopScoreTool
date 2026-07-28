@@ -223,6 +223,111 @@ func TestDeterminism(t *testing.T) {
 	}
 }
 
+func TestAgentFormat(t *testing.T) {
+	code, stdout, stderr := runCLI(t, []string{"--format", "agent"}, sampleProse)
+	if code != 0 {
+		t.Fatalf("exit %d", code)
+	}
+	if stderr != "" {
+		t.Errorf("stderr not clean: %q", stderr)
+	}
+	for _, want := range []string{"sst ", "== stdin ==", "score:", "stats:", "guide:"} {
+		if !strings.Contains(stdout, want) {
+			t.Errorf("agent output missing %q:\n%s", want, stdout)
+		}
+	}
+	if strings.Contains(stdout, "lists_sha256") || strings.Contains(stdout, "schema_version") {
+		t.Errorf("agent output leaked full-contract detail:\n%s", stdout)
+	}
+	_, second, _ := runCLI(t, []string{"--format", "agent"}, sampleProse)
+	if stdout != second {
+		t.Error("agent output must be deterministic")
+	}
+}
+
+func TestAgentCompare(t *testing.T) {
+	before := writeTemp(t, "before.txt", "It was not just late, but completely forgotten. The silence was not empty. It was full.")
+	after := writeTemp(t, "after.txt", "The train ran three hours late. The platform was quiet.")
+	code, stdout, _ := runCLI(t, []string{"--format", "agent", "--compare", before, after}, "")
+	if code != 0 {
+		t.Fatalf("exit %d", code)
+	}
+	if !strings.Contains(stdout, "== compare:") || !strings.Contains(stdout, "no winner declared") {
+		t.Errorf("unexpected agent compare output:\n%s", stdout)
+	}
+}
+
+func TestBriefJSON(t *testing.T) {
+	code, stdout, _ := runCLI(t, []string{"--format", "brief"}, sampleProse)
+	if code != 0 {
+		t.Fatalf("exit %d", code)
+	}
+	var brief briefReport
+	if err := json.Unmarshal([]byte(stdout), &brief); err != nil {
+		t.Fatalf("stdout is not clean JSON: %v\n%s", err, stdout)
+	}
+	if brief.SchemaVersion != slop.SchemaVersion {
+		t.Errorf("schema_version = %d", brief.SchemaVersion)
+	}
+	if brief.Compatibility != slop.CompatibilityStage1Fallback {
+		t.Errorf("compatibility = %q", brief.Compatibility)
+	}
+	if len(brief.Documents) != 1 || brief.Documents[0].Score == nil {
+		t.Fatal("brief report missing scored document")
+	}
+	for _, leaked := range []string{"lists_sha256", "calibration_range", "excerpt", "signals"} {
+		if strings.Contains(stdout, leaked) {
+			t.Errorf("brief output leaked %q:\n%s", leaked, stdout)
+		}
+	}
+}
+
+func TestSkillPrint(t *testing.T) {
+	code, stdout, stderr := runCLI(t, []string{"skill"}, "")
+	if code != 0 {
+		t.Fatalf("exit %d: %s", code, stderr)
+	}
+	if !strings.Contains(stdout, "name: review-writing-slop") {
+		t.Errorf("skill output missing frontmatter:\n%.200s", stdout)
+	}
+}
+
+func TestSkillInstall(t *testing.T) {
+	dir := t.TempDir()
+	code, stdout, _ := runCLI(t, []string{"skill", "--install", dir}, "")
+	if code != 0 {
+		t.Fatalf("install exit %d", code)
+	}
+	target := filepath.Join(dir, "review-writing-slop", "SKILL.md")
+	if !strings.Contains(stdout, target) {
+		t.Errorf("install output should name the written file: %q", stdout)
+	}
+	content, err := os.ReadFile(target)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if string(content) != string(skillDoc) {
+		t.Error("installed file differs from embedded skill")
+	}
+	if _, err := os.Stat(filepath.Join(dir, "review-writing-slop", "agents", "openai.yaml")); err != nil {
+		t.Error("auxiliary skill files were not installed:", err)
+	}
+
+	if code, _, _ := runCLI(t, []string{"skill", "--install", dir}, ""); code != 0 {
+		t.Errorf("reinstall of identical file: exit %d, want 0", code)
+	}
+
+	if err := os.WriteFile(target, []byte("local edits"), 0o600); err != nil {
+		t.Fatal(err)
+	}
+	if code, _, _ := runCLI(t, []string{"skill", "--install", dir}, ""); code != 1 {
+		t.Errorf("conflicting file without --force: exit %d, want 1", code)
+	}
+	if code, _, _ := runCLI(t, []string{"skill", "--install", dir, "--force"}, ""); code != 0 {
+		t.Errorf("conflicting file with --force: exit %d, want 0", code)
+	}
+}
+
 func TestVersion(t *testing.T) {
 	code, stdout, _ := runCLI(t, []string{"--version"}, "")
 	if code != 0 {

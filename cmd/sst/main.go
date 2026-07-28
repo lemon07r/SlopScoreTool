@@ -28,6 +28,14 @@ type usageError struct{ msg string }
 func (e *usageError) Error() string { return e.msg }
 
 func run(argv []string, stdin io.Reader, stdout, stderr io.Writer) int {
+	if len(argv) > 0 {
+		switch argv[0] {
+		case "skill":
+			return runSkill(argv[1:], stdout, stderr)
+		case "mcp":
+			return runMCP(argv[1:], stdin, stdout, stderr)
+		}
+	}
 	opts, err := parseFlags(argv)
 	if err != nil {
 		fmt.Fprintln(stderr, "sst:", err)

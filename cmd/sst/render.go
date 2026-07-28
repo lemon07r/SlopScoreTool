@@ -16,8 +16,13 @@ func renderJSON(w io.Writer, v any) error {
 }
 
 func renderReport(w io.Writer, format string, report slop.Report) error {
-	if format == "json" {
+	switch format {
+	case "json":
 		return renderJSON(w, report)
+	case "brief":
+		return renderJSON(w, briefReportFrom(report))
+	case "agent":
+		return renderAgentReport(w, report)
 	}
 	for _, doc := range report.Documents {
 		renderDocument(w, doc)
@@ -124,8 +129,13 @@ func renderCorpus(w io.Writer, corpus *slop.CorpusInfo) {
 }
 
 func renderComparison(w io.Writer, format string, cmp slop.Comparison) error {
-	if format == "json" {
+	switch format {
+	case "json":
 		return renderJSON(w, cmp)
+	case "brief":
+		return renderJSON(w, briefComparisonFrom(cmp))
+	case "agent":
+		return renderAgentComparison(w, cmp)
 	}
 	fmt.Fprintf(w, "== compare: %s -> %s ==\n", cmp.Before.Name, cmp.After.Name)
 	if cmp.Deltas.Score != nil {

@@ -62,6 +62,8 @@ jobs:
           CGO_ENABLED=0 go build -trimpath -ldflags="-s -w" -o "stage/sst${ext}" ./cmd/sst
           cp "stage/sst${ext}" "stage/slop-score${ext}"
           cp LICENSE NOTICE README.md stage/
+          mkdir -p stage/skills
+          cp -r cmd/sst/skill stage/skills/review-writing-slop
           base="sst_${GITHUB_REF_NAME#v}_${GOOS}_${GOARCH}"
           if [ "$GOOS" = windows ]; then
             (cd stage && zip -q "../dist/${base}.zip" ./*)

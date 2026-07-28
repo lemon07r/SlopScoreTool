@@ -30,25 +30,44 @@ Or build from a checkout: `make install` (into your GOBIN), or `make build`
 
 ### Use with an agent harness
 
-Put the binary on `PATH`, then copy (or symlink) the skill into your
-harness's skill directory:
+The binary embeds the review skill, so installation works from any installed
+`sst`, no checkout needed:
 
 ```sh
-cp -r .agents/skills/review-writing-slop <skills-dir>/   # e.g. .claude/skills/, .factory/skills/, .agents/skills/
+sst skill --install <skills-dir>   # e.g. .claude/skills, .factory/skills, .agents/skills
+sst skill                          # print SKILL.md to stdout for manual placement
 ```
 
-Harnesses without skill support can call the same CLI/JSON contract
-directly.
+Release archives also carry a copy under `skills/`. Harnesses without skill
+support can call the CLI/JSON contract directly.
 
 ## Use
 
 ```sh
 sst draft.txt                 # analyze files (or stdin when none given)
 cat draft.txt | sst           # stdin
-sst --format json draft.txt   # compact machine report (stdout stays clean)
+sst --format agent draft.txt  # compact LLM-oriented report (agent default)
+sst --format brief draft.txt  # trimmed JSON for structured pipelines
+sst --format json draft.txt   # full versioned JSON contract
 sst --compare before.txt after.txt   # revision comparison, no winner declared
 sst --full draft.txt          # all findings, no per-group limit
 sst --exclude-term kubernetes docs/*.md   # omit a necessary domain term
+```
+
+Output formats: `text` (human report, default), `agent` (compact
+LLM-oriented report: no provenance block, calibration detail, or excerpts;
+byte offsets point back into the source), `brief` (the same trimming as
+JSON), and `json` (the full versioned machine contract).
+
+### MCP mode
+
+`sst mcp` serves the same analysis over MCP (stdio transport), exposing
+`analyze` and `compare` tools that return the agent-format report plus brief
+JSON structured content. Register it with your harness, e.g.
+`claude mcp add sst -- sst mcp`, or via client configuration JSON:
+
+```json
+{"mcpServers": {"sst": {"command": "sst", "args": ["mcp"]}}}
 ```
 
 Multiple files are analyzed independently, never concatenated, and the JSON

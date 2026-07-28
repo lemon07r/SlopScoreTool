@@ -15,9 +15,13 @@ const usageText = `sst - analyze prose for AI-associated writing tendencies
 Usage:
   sst [flags] [FILE ...]      analyze files, or stdin when none are given
   sst --compare BEFORE AFTER  compare two drafts
+  sst skill [--install DIR]   print or install the agent review skill
+  sst mcp                     serve the analyzer over MCP (stdio)
 
 Flags:
-  --format text|json   output format (default "text")
+  --format text|json|agent|brief
+                      output format (default "text"); agent is a compact
+                      LLM-oriented report, brief is trimmed JSON
   --max-findings N     findings per group in the report (default 10)
   --full               include all findings, no per-group limit
   --exclude-term TERM  omit findings whose text equals TERM (repeatable)
@@ -55,7 +59,7 @@ func parseFlags(argv []string) (cliOptions, error) {
 	opts := cliOptions{format: "text", maxFindings: 10}
 	fs := flag.NewFlagSet("sst", flag.ContinueOnError)
 	fs.SetOutput(io.Discard)
-	fs.StringVar(&opts.format, "format", "text", "output format: text or json")
+	fs.StringVar(&opts.format, "format", "text", "output format: text, json, agent, or brief")
 	fs.IntVar(&opts.maxFindings, "max-findings", 10, "findings per group")
 	fs.BoolVar(&opts.full, "full", false, "no finding limit")
 	fs.Var((*stringList)(&opts.excludeTerms), "exclude-term", "omit a finding text (repeatable)")
@@ -68,9 +72,9 @@ func parseFlags(argv []string) (cliOptions, error) {
 	}
 	opts.files = fs.Args()
 	switch opts.format {
-	case "text", "json":
+	case "text", "json", "agent", "brief":
 	default:
-		return opts, fmt.Errorf("unknown --format %q (want text or json)", opts.format)
+		return opts, fmt.Errorf("unknown --format %q (want text, json, agent, or brief)", opts.format)
 	}
 	if opts.maxFindings < 0 {
 		return opts, fmt.Errorf("--max-findings must be >= 0")
