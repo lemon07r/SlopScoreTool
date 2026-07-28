@@ -9,7 +9,8 @@ It is not an AI-authorship detector and not a measure of writing quality. A
 score orients review; the findings are the product.
 
 - Offline and deterministic. No network access at runtime, no configuration.
-- Single static Go binary plus a versioned JSON contract for agents.
+- Single static Go binary: human and agent-optimized CLI output, an
+  embedded agent skill, and an optional MCP server.
 - Scoring core compatible with the pinned upstream EQ-Bench method in the
   precisely named `eqbench-stage1-fallback` mode (see
   [docs/methodology.md](docs/methodology.md)).
@@ -18,8 +19,9 @@ score orients review; the findings are the product.
 
 Download an archive from the
 [releases page](https://github.com/lemon07r/SlopScoreTool/releases) for your
-platform; each archive contains the `sst` binary and a `slop-score` alias
-(same program, either name works). With a current stable Go toolchain:
+platform; each archive contains the `sst` binary, a `slop-score` alias
+(same program, either name works), and a copy of the agent skill under
+`skills/`. With a current stable Go toolchain:
 
 ```sh
 go install github.com/lemon07r/SlopScoreTool/cmd/sst@latest
@@ -56,25 +58,25 @@ sst --exclude-term kubernetes docs/*.md   # omit a necessary domain term
 
 Output formats: `text` (human report, default), `agent` (compact
 LLM-oriented report: no provenance block, calibration detail, or excerpts;
-byte offsets point back into the source), `brief` (the same trimming as
-JSON), and `json` (the full versioned machine contract).
-
-### MCP mode
-
-`sst mcp` serves the same analysis over MCP (stdio transport), exposing
-`analyze` and `compare` tools that return the agent-format report plus brief
-JSON structured content. Register it with your harness, e.g.
-`claude mcp add sst -- sst mcp`, or via client configuration JSON:
-
-```json
-{"mcpServers": {"sst": {"command": "sst", "args": ["mcp"]}}}
-```
+byte offsets point back into the source), `brief` (the same trim, as JSON),
+and `json` (the full versioned machine contract).
 
 Multiple files are analyzed independently, never concatenated, and the JSON
 report adds a corpus aggregate (score spread, findings shared across
 documents). Diagnostics go to stderr. Adverse findings are a successful
 analysis: the exit code stays 0; nonzero exits mean usage or operational
 failure.
+
+### MCP mode
+
+`sst mcp` serves the same analysis over MCP (stdio transport), exposing
+`analyze` and `compare` tools that return the agent-format report plus
+brief JSON structured content. Register it with your harness, e.g.
+`claude mcp add sst -- sst mcp`, or via client configuration JSON:
+
+```json
+{"mcpServers": {"sst": {"command": "sst", "args": ["mcp"]}}}
+```
 
 Example text report:
 
@@ -90,6 +92,22 @@ findings:
     [w1] "tapestry" x1 — in EQ-Bench AI-overused word list
          @538:546 › … crucible with ease, weaving a tapestry of words that draws everyone …
   ...
+```
+
+The same document in `--format agent` (what the skill and MCP tools use):
+
+```text
+sst 1.1.0 · eqbench-stage1-fallback · evidence for editorial judgment, not an AI detector
+== draft.txt ==
+score: 5.9/100 = slop_words 4.7 + contrast_patterns 0.9 + slop_trigrams 0.3 · orientation only
+stats: 185 words · 1001 chars · 23 sentences · 10 paragraphs · 114 unique words
+findings (4 shown):
+slop words (1):
+- [w1] "stared" x1 @414:420 — in EQ-Bench AI-overused word list
+repeated sentence openings (3):
+- [o1] "you" x4 [not scored] @1:4 — 4 sentences begin with "you"
+...
+guide: repetition and concentration outrank single hits; keep intentional, quoted, or domain-necessary language; judge the prose, not the score
 ```
 
 ## Interpret
