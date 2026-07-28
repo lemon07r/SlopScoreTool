@@ -16,6 +16,7 @@ The sources below are starting evidence, not a product boundary. Inspect them, e
 - Public method: <https://eqbench.com/slop-score.html>
 - Current upstream: <https://github.com/sam-paech/slop-score>
 - Site source supplied by the user: <https://github.com/EQ-bench/EQ-bench-site>
+- Optional Go practice catalogue: <https://github.com/samber/cc-skills-golang>
 
 Pin the upstream revisions actually used and preserve their licenses and attribution.
 
@@ -60,6 +61,8 @@ This is a preference, not a prohibition. A server, UI, MCP adapter, remote API, 
 Start with the latest stable Go release and latest stable compatible dependencies, verified from primary sources. Pin chosen versions and record only meaningful exceptions. Installing useful developer or system tools is in scope.
 
 The supplied Makefile and golangci-lint configuration establish the developer workflow. Refresh their pinned tools and adapt command paths or noisy linters as the code takes shape. Keep `make check` quick and `make audit` thorough.
+
+Mine the optional Go skill catalogue selectively rather than installing it wholesale. The useful ideas for this project include injectable CLI streams and keeping process exits at the program boundary, fuzzing text and span invariants, measuring realistic corpora before optimizing, and using current language and tooling features. Do not inherit framework defaults, rigid layout or test rituals, or production machinery without a need demonstrated by this code.
 
 ## Analysis result
 
