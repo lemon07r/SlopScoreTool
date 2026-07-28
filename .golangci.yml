@@ -8,20 +8,34 @@ linters:
   default: standard
   enable:
     - bidichk
+    - copyloopvar
     - durationcheck
     - errchkjson
     - errorlint
     - exhaustive
+    - gocognit
     - gosec
+    - intrange
     - makezero
     - misspell
     - modernize
     - musttag
     - nilerr
     - nilnesserr
+    - nilnil
     - nolintlint
+    - predeclared
+    - revive
     - thelper
     - usetesting
+  settings:
+    # Regression gate, not a style target: current worst function scores 45.
+    gocognit:
+      min-complexity: 50
+    revive:
+      rules:
+        # min/max became builtins in Go 1.21; shadowing them is a real footgun.
+        - name: redefines-builtin-id
   exclusions:
     rules:
       # Reading user-specified input files is the CLI's core function; the

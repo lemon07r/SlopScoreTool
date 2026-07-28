@@ -139,17 +139,17 @@ func parseLeaderboard(body []byte) (*leaderboard, error) {
 // paddedRange mirrors the upstream normalization: observed min/max expanded
 // by rangeBuffer of the span on each side.
 func paddedRange(values []float64) normRange {
-	min, max := values[0], values[0]
+	lo, hi := values[0], values[0]
 	for _, v := range values[1:] {
-		if v < min {
-			min = v
+		if v < lo {
+			lo = v
 		}
-		if v > max {
-			max = v
+		if v > hi {
+			hi = v
 		}
 	}
-	span := max - min
-	return normRange{Min: min - span*rangeBuffer, Max: max + span*rangeBuffer}
+	span := hi - lo
+	return normRange{Min: lo - span*rangeBuffer, Max: hi + span*rangeBuffer}
 }
 
 func sha256Hex(b []byte) string {

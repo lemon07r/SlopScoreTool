@@ -16,7 +16,7 @@ GOVULNCHECK_VERSION ?= v1.6.0
 GOLANGCI_LINT ?= $(TOOLS_DIR)/golangci-lint
 GOVULNCHECK ?= $(TOOLS_DIR)/govulncheck
 
-.PHONY: help tools doctor format format-check lint vet mod-check test test-race \
+.PHONY: help tools doctor format format-check lint lint-fix vet mod-check test test-race \
 	test-cover vuln check audit build install clean data oracle eval test-fuzz \
 	stage2-delta require-module require-lint require-vulncheck
 
@@ -45,6 +45,9 @@ format-check: require-module require-lint ## Report formatting drift without cha
 lint: require-module require-lint ## Run the curated static-analysis suite.
 	@"$(GOLANGCI_LINT)" config verify
 	@"$(GOLANGCI_LINT)" run $(PACKAGES)
+
+lint-fix: require-module require-lint ## Apply golangci-lint auto-fixes.
+	@"$(GOLANGCI_LINT)" run --fix $(PACKAGES)
 
 vet: require-module ## Run Go's built-in semantic checks.
 	@"$(GO)" vet $(PACKAGES)
