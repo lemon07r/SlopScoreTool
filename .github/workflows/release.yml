@@ -92,6 +92,7 @@ jobs:
           cd dist
           sha256sum ./*.tar.gz ./*.zip > checksums.txt
           gh release create "$GITHUB_REF_NAME" \
+            --repo "${{ github.repository }}" \
             --title "$GITHUB_REF_NAME" \
             --generate-notes \
             ./*
