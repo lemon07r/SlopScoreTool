@@ -181,7 +181,7 @@ func shortRepo(repo string) string {
 }
 
 func shortSHA(sha string) string {
-	if sha != "" {
+	if len(sha) > 7 {
 		return sha[:7]
 	}
 	return sha
