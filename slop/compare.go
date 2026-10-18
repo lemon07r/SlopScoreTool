@@ -145,7 +145,7 @@ func (a *Analyzer) Compare(before, after Document, maxFindings int) Comparison {
 
 func abs(v int) int {
 	if v < 0 {
-		return -v
+		return v
 	}
 	return v
 }
