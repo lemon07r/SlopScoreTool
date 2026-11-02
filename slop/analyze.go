@@ -321,7 +321,7 @@ func buildCorpus(docs []Document) *CorpusInfo {
 		}
 		median := scores[len(scores)/2]
 		if len(scores)%2 == 0 {
-			median = (scores[len(scores)/2-1] + scores[len(scores)/2]) / 2
+			median = (scores[len(scores)/2] + scores[len(scores)/2+1]) / 2
 		}
 		corpus.Score = &ScoreSummary{
 			Min: scores[0], Median: median, Mean: sum / float64(len(scores)), Max: scores[len(scores)-1],
